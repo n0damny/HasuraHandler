@@ -7,6 +7,7 @@ last_modified_date: 2020-08-20T11:07:47+0000
 ---
 
 # Build Realtime GraphQL Rails Apps
+
 {: .fs-9 }
 
 HasuraHandler is a Rails framework that makes building microservices for Hasura easy.
@@ -32,11 +33,12 @@ such as sending an updated record to a search backend/provider for indexing.
 
 When using Hasura as part of a Rails app, Hasura can act as several pieces of
 infrastructure:
-* A GraphQL API gateway that supports subscriptions over websockets.
-* An internal event-based webhook service that delivers records to endpoints
+
+- A GraphQL API gateway that supports subscriptions over websockets.
+- An internal event-based webhook service that delivers records to endpoints
   when they're insertted/updated/deleted.
-* As a data access layer where services use it as a master data store.
-* An internal webhook scheduling service that can deliver one-off or recurring
+- As a data access layer where services use it as a master data store.
+- An internal webhook scheduling service that can deliver one-off or recurring
   events to endpoints.
 
 Since Hasura can be used in so many ways, it can be added to an application
@@ -47,11 +49,13 @@ building and architecting your app.
 ## Quick Start
 
 1. Add the gem to your project
+
 ```ruby
 gem 'hasura_handler', '~> 0.1.0'
 ```
 
 2. Create `config/initializers/hasura_handler.rb`:
+
 ```ruby
 HasuraHandler.setup do |config|
   config.auth_key = ENV['HASURA_SERVICE_KEY'] || Rails.application.credentials.hasura_service_key
@@ -59,17 +63,20 @@ end
 ```
 
 3. Create the following directories:
-* `app/actions`
-* `app/reactions`
+
+- `app/actions`
+- `app/events`
 
 4. Add routes in `config/routes.rb`:
+
 ```ruby
 mount HasuraHandler::Engine => '/hasura'
 ```
 
 5. Create event trigger in Hasura: **TODO**
 
-6. Create event reaction in `app/reactions/welcome_user.rb`:
+6. Create event reaction in `app/events/welcome_user.rb`:
+
 ```ruby
     class WelcomeUser < HasuraHandler::EventHandler
       match_by trigger: 'user_inserted'
