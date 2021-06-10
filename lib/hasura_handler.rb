@@ -6,28 +6,26 @@ require 'hasura_handler/event'
 require 'hasura_handler/action'
 
 module HasuraHandler
-  class << self
-    mattr_accessor :auth_header,
-                   :auth_key,
-                   :authentication_enabled,
-                   :authenticator,
-                   :events_enabled,
-                   :actions_enabled,
-                   :event_job_queue,
-                   :event_handler_job_queue,
-                   :async_events,
-                   :fanout_events
+  mattr_accessor :auth_header,
+                  :auth_key,
+                  :authentication_enabled,
+                  :authenticator,
+                  :events_enabled,
+                  :actions_enabled,
+                  :event_job_queue,
+                  :event_handler_job_queue,
+                  :async_events,
+                  :fanout_events
 
-    self.auth_header = 'HTTP_X_HASURA_SERVICE_KEY'
-    self.authentication_enabled = false
-    self.authenticator = nil
-    self.events_enabled = true
-    self.async_events = true
-    self.fanout_events = true
-    self.actions_enabled = true
-    self.event_job_queue = :hasura_event
-    self.event_handler_job_queue = :hasura_event
-  end
+  self.auth_header = 'HTTP_X_HASURA_SERVICE_KEY'
+  self.authentication_enabled = false
+  self.authenticator = nil
+  self.events_enabled = true
+  self.async_events = true
+  self.fanout_events = true
+  self.actions_enabled = true
+  self.event_job_queue = :hasura_event
+  self.event_handler_job_queue = :hasura_event
 
   def self.setup(&block)
     yield self
