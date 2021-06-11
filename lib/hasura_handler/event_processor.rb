@@ -1,9 +1,11 @@
 module HasuraHandler
   class EventProcessor
     attr_accessor :event
+    attr_accessor :errors
 
     def initialize(event)
       @event = HasuraHandler::Event.new(event)
+      @errors = {}
     end
 
     def process_later
@@ -34,7 +36,7 @@ module HasuraHandler
     private
 
     def log_missing_handler
-        Rails.logger.debug('[HasuraHandler] Received event with no matching handlers.')
+      errors['hasura_handler'] = 'Received event with no matching handlers.'
     end
 
     def event_handlers

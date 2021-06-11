@@ -13,8 +13,11 @@ module HasuraHandler
       end
 
       if HasuraHandler.async_events
-        processor.process_later
-        render json: { queued: true }, status: 202
+        if processor.process_later
+          render json: { queued: true }, status: 202
+        else
+          error_response(processor.errors)
+        end
         return
       end
 
