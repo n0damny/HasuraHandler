@@ -8,6 +8,10 @@ HasuraHandler::Engine.routes.draw do
     post '/events', to: 'events#index'
   end
 
+  if HasuraHandler.cron_events_enabled
+    post '/cron_events', to: 'cron_events#index'
+  end
+
   if HasuraHandler.actions_enabled
     post '/actions', to: 'actions#index'
   end

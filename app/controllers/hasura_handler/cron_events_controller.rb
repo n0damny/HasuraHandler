@@ -1,11 +1,12 @@
 require_dependency 'hasura_handler/application_controller'
 
 module HasuraHandler
-  class EventsController < ApplicationController
+  class CronEventsController < ApplicationController
     before_action :check_header
 
     def index
-      processor = HasuraHandler::EventProcessor.new(raw_params)
+      binding.break
+      processor = HasuraHandler::CronEventProcessor.new(raw_params)
 
       unless processor.event.valid?
         error_response(processor.event.errors)

@@ -24,5 +24,11 @@ module HasuraHandler
       select{ |k,v| k =~ /\AHTTP_/ }.
       to_h
     end
+
+    private
+
+    def error_response(errors)
+      render json: { success: false, errors: errors }, status: 400
+    end
   end
 end

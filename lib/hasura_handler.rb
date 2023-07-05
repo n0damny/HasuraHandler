@@ -3,6 +3,8 @@ require 'hasura_handler/authenticator'
 require 'hasura_handler/event_handler'
 require 'hasura_handler/event_processor'
 require 'hasura_handler/event'
+require 'hasura_handler/cron_event_processor'
+require 'hasura_handler/cron_event'
 require 'hasura_handler/action'
 
 module HasuraHandler
@@ -11,6 +13,7 @@ module HasuraHandler
                   :authentication_enabled,
                   :authenticator,
                   :events_enabled,
+                  :cron_events_enabled,
                   :actions_enabled,
                   :event_job_queue,
                   :event_handler_job_queue,
@@ -21,6 +24,7 @@ module HasuraHandler
   self.authentication_enabled = false
   self.authenticator = nil
   self.events_enabled = true
+  self.cron_events_enabled = true
   self.async_events = true
   self.fanout_events = true
   self.actions_enabled = true
@@ -30,7 +34,7 @@ module HasuraHandler
   def self.setup(&block)
     yield self
 
-    if (self.events_enabled || self.actions_enabled) && self.auth_key.blank?
+    if (events_enabled || actions_enabled || cron_events_enabled) && auth_key.blank?
       raise 'HasuraHandler requires the auth_key to be configured if actions or events are enabled.'
     end
 
