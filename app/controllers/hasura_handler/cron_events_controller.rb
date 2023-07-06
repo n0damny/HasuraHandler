@@ -5,7 +5,6 @@ module HasuraHandler
     before_action :check_header
 
     def index
-      binding.break
       processor = HasuraHandler::CronEventProcessor.new(raw_params)
 
       unless processor.event.valid?
